@@ -25,8 +25,6 @@ namespace MvcMovie.Controllers
             var mvcMovieContext = _context.Reviews.Include(r => r.Movie);
             var ReviewsSort = from r in _context.Reviews
                               select r;
-            var MovieSort= from m in _context.Movie
-                           select m;
 
             if (OrderBy =="Reviewer")
             {
@@ -39,15 +37,15 @@ namespace MvcMovie.Controllers
                     ReviewsSort = ReviewsSort.OrderBy(r => r.Reviewer);
                 }
             }
-            if(OrderBy== "Movie")
+            if(OrderBy== "Movie")   
             {
                 if (Direction == "Desc")
                 {
-                    MovieSort = MovieSort.OrderByDescending(r => r.Title);
+                    ReviewsSort = ReviewsSort.OrderByDescending(r => r.Movie.Title);
                 }
                 else
                 {
-                    MovieSort = MovieSort.OrderBy(r => r.Title);
+                   ReviewsSort = ReviewsSort.OrderBy(r => r.Movie.Title);
                 }
             }
 
