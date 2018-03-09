@@ -11,8 +11,8 @@ using System;
 namespace MvcMovie.Migrations
 {
     [DbContext(typeof(MvcMovieContext))]
-    [Migration("20180307221534_Movie")]
-    partial class Movie
+    [Migration("20180309155549_MovieReviews")]
+    partial class MovieReviews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,7 +60,6 @@ namespace MvcMovie.Migrations
                     b.HasKey("ReviewsID");
 
                     b.HasIndex("MovieID");
-                        
 
                     b.ToTable("Reviews");
                 });
@@ -68,8 +67,8 @@ namespace MvcMovie.Migrations
             modelBuilder.Entity("MvcMovie.Models.Reviews", b =>
                 {
                     b.HasOne("MvcMovie.Models.Movie", "Movie")
-                        .WithMany("Review")
-                        .HasForeignKey("MvcMovie.Models.Reviews", "MovieID")
+                        .WithMany()
+                        .HasForeignKey("MovieID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
