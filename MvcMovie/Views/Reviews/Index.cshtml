@@ -11,13 +11,13 @@
     <thead>
         <tr>
                 <th>
-                    <a asp-action="Index" asp-route-OrderBy="Reviewer" asp-route-Direction="Desc">@Html.DisplayNameFor(model => model.Reviewer)</a>
+                    <a asp-action="Index" asp-route-OrderBy="Reviewer" asp-route-Direction="@ViewData["DirectionSortParm"]">@Html.DisplayNameFor(model => model.Reviewer)</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Review)
                 </th>
             <th>
-                <a asp-action="Index" asp-route-OrderBy="Movie" asp-route-Direction="Desc">@Html.DisplayNameFor(model => model.Movie)</a>
+                <a asp-action="Index" asp-route-OrderBy="Movie" asp-route-Direction="@ViewData["DirectionSortParm"]">@Html.DisplayNameFor(model => model.Movie)</a>
             </th>
             <th></th>
         </tr>

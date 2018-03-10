@@ -21,35 +21,50 @@ namespace MvcMovie.Controllers
         // GET: Reviews
         public async Task<IActionResult> Index(string OrderBy, string Direction)
         {
-           
+            ViewData["DirectionSortParm"] = Direction == "Asc" ? "Desc" : "Asc";
             var mvcMovieContext = _context.Reviews.Include(r => r.Movie);
-            var ReviewsSort = from r in _context.Reviews
+            var ReviewsSort = from r in _context.Reviews.Include(r => r.Movie)
                               select r;
-
-            if (OrderBy =="Reviewer")
+            if (string.IsNullOrWhiteSpace(Direction) || Direction.Equals("Asc"))
+                {
+                Direction = "Desc";
+                    }
+            else
             {
-                if(Direction == "Desc")
-                {
-                    ReviewsSort = ReviewsSort.OrderByDescending(r => r.Reviewer);
-                }
-                else
-                {
-                    ReviewsSort = ReviewsSort.OrderBy(r => r.Reviewer);
-                }
+                Direction = "Asc";
             }
-            if(OrderBy== "Movie")   
+            switch(Direction)
             {
-                if (Direction == "Desc")
-                {
-                    ReviewsSort = ReviewsSort.OrderByDescending(r => r.Movie.Title);
-                }
-                else
-                {
-                   ReviewsSort = ReviewsSort.OrderBy(r => r.Movie.Title);
-                }
+                case "Asc":
+                    if(OrderBy == "Reviewer")
+                    {
+                        ReviewsSort = ReviewsSort.OrderBy(r => r.Reviewer);
+                        Direction = "Desc";
+                    }
+                  else
+                    {
+                        ReviewsSort = ReviewsSort.OrderBy(r => r.Movie.Title);
+                        Direction = "Desc";
+                    }
+                    break;
+                case "Desc":
+                    if (OrderBy == "Reviewer")
+                    {
+                        ReviewsSort = ReviewsSort.OrderByDescending(r => r.Reviewer);
+                        Direction = "Asc";
+                    }
+                    else
+                    {
+                        ReviewsSort = ReviewsSort.OrderByDescending(r => r.Movie.Title);
+                        Direction = "Asc";
+                    }
+                    break;
+
             }
 
-                return View(await mvcMovieContext.ToListAsync());
+            
+
+                return View(await ReviewsSort.ToListAsync());
 
             
         }
